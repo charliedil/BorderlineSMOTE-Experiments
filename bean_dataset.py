@@ -4,7 +4,7 @@ from imblearn.over_sampling  import BorderlineSMOTE, SMOTE
 import numpy as np
 
 """BEAN DATA SET CLASS"""
-class BeanDataset:
+class Dataset:
 
     """Constructor, two ways to init, one with a path to the arff file or with two array like ojects for the features and classes"""
     def __init__(self, dataset_path=None, features=None, classes=None):
@@ -24,7 +24,8 @@ class BeanDataset:
         """Fill this in with the code to split into k buckets for CV, might not need this, or maybe it shouldnt go in this class. but its here for now"""
 
 
-    """borderline smote code"""
+    """borderline smote code
+    kind can be borderline-1 or borderline-2"""
     def oversample_bsmote(self, kind, sampling_strategy='not majority', random_state=42, k_neighbors=5, m_neighbors=10): #may want to play with the parameters here
         features, classes = BorderlineSMOTE(kind=kind, sampling_strategy=sampling_strategy, 
                         random_state=random_state,k_neighbors=k_neighbors,m_neighbors=m_neighbors).fit_resample(self.features, self.classes)

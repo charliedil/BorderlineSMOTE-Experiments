@@ -13,18 +13,18 @@ Python version: python3.10
 But 3.11 should also work.
 """
 
-from bean_dataset import BeanDataset
+from bean_dataset import Dataset
 import pandas as pd
 
 import sys
 
 """Preprocessing the dataset. Create dataset object and oversample!"""
 def preprocess(dataset_path):
-    bean_dataset = BeanDataset(dataset_path=dataset_path)
+    bean_dataset = Dataset(dataset_path=dataset_path)
     print("Before sampling:")
     print(bean_dataset.get_distr())
     features, classes = bean_dataset.oversample_smote()
-    bean_oversampled_dataset = BeanDataset(classes = classes, features=features)
+    bean_oversampled_dataset = Dataset(classes = classes, features=features)
     print("After sampling:")
     print(bean_oversampled_dataset.get_distr())
 
