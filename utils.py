@@ -29,5 +29,10 @@ def print_scores(scores, sampling_method=None):
         sampling_method = "Before Sampling"
 
     print(sampling_method)
-    print("Cross-validation scores:", scores)
-    print("Mean cross-validation score:", np.mean(scores))
+    print("Cross-validation scores:")
+    print("F1:", scores[0])
+    print("Mean F1:", np.mean(scores[0]))
+    print("Recall:", scores[1])
+    print("Mean Recall:", np.mean(scores[1]))
+    print("Precision:", scores[2])
+    print("Mean Precision:", np.mean(scores[2]))

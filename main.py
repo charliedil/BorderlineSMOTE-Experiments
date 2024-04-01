@@ -57,6 +57,13 @@ def main():
     print_scores(
         cl.cross_val_score(
             estimator=LogisticRegression(solver="liblinear", max_iter=1000),
+            smote_strategy="smote",
+        ),
+        "Regular Smote",
+    )
+    print_scores(
+        cl.cross_val_score(
+            estimator=LogisticRegression(solver="liblinear", max_iter=1000),
             smote_strategy="borderline-1",
         ),
         "Borderline Smote - 1",
@@ -67,13 +74,6 @@ def main():
             smote_strategy="borderline-2",
         ),
         "Borderline Smote - 2",
-    )
-    print_scores(
-        cl.cross_val_score(
-            estimator=LogisticRegression(solver="liblinear", max_iter=1000),
-            smote_strategy="smote",
-        ),
-        "Regular Smote",
     )
 
 
