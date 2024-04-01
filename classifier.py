@@ -1,7 +1,8 @@
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import cross_val_score, StratifiedKFold
+from sklearn.model_selection import StratifiedKFold
 from bean_dataset import Dataset
-from sklearn.metrics import f1_score
+from sklearn.metrics import f1_score, recall_score, precision_score
+import time
 
 """ CLASSIFIER CLASS """
 
@@ -10,12 +11,16 @@ class Classifier:
     def __init__(self, features, classes, n_splits=5):
         self.features = features
         self.classes = classes
-        self.cv = StratifiedKFold(n_splits=n_splits, shuffle=True)
+        self.cv = StratifiedKFold(
+            n_splits=n_splits, shuffle=True, random_state=int(time.time())
+        )
 
     """ Get the F1 score of the estimator after cross validation """
 
     def cross_val_score(self, estimator, smote_strategy="borderline-1"):
-        scores = []
+        f1_scores = []
+        recall_scores = []
+        precision_scores = []
         X = self.features
         y = self.classes
         cv = self.cv
@@ -33,6 +38,8 @@ class Classifier:
             estimator.fit(X_train, y_train)
             y_pred = estimator.predict(X_val)
 
-            score = f1_score(y_val, y_pred, average="macro")
-            scores.append(score)
-        return scores
+            f1_scores.append(f1_score(y_val, y_pred, average="macro"))
+            recall_scores.append(recall_score(y_val, y_pred, average="macro"))
+            precision_scores.append(precision_score(y_val, y_pred, average="macro"))
+
+        return f1_scores, recall_scores, precision_scores
