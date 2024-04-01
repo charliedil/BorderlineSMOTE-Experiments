@@ -1,5 +1,6 @@
 from bean_dataset import Dataset
 import numpy as np
+from prettytable import PrettyTable
 
 """ Create a dataset object from given path """
 
@@ -21,7 +22,7 @@ def compare_distr(dataset):
     print(bean_oversampled_dataset.get_distr())
 
 
-""" Print the F1 cross validation scores and their mean """
+""" Return the mean, median and standard deviation of the cross validation scores """
 
 
 def print_scores(scores, sampling_method=None):
@@ -29,10 +30,15 @@ def print_scores(scores, sampling_method=None):
         sampling_method = "Before Sampling"
 
     print(sampling_method)
-    print("Cross-validation scores:")
     print("F1:", scores[0])
-    print("Mean F1:", np.mean(scores[0]))
     print("Recall:", scores[1])
-    print("Mean Recall:", np.mean(scores[1]))
     print("Precision:", scores[2])
-    print("Mean Precision:", np.mean(scores[2]))
+    table = PrettyTable()
+    table.field_names = ["Measure", "Mean", "Median", "Standard Deviation"]
+    measures = ["F1", "Recall", "Precision"]
+    for i in range(len(scores)):
+        table.add_row(
+            [measures[i], np.mean(scores[i]), np.median(scores[i]), np.std(scores[i])]
+        )
+
+    print(table)

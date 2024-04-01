@@ -49,6 +49,8 @@ def main():
     compare_distr(dataset=dataset)
 
     cl = Classifier(features=dataset.features, classes=dataset.classes, n_splits=5)
+
+    print("Cross-validation scores:")
     print_scores(
         cl.cross_val_score(
             estimator=LogisticRegression(solver="liblinear", max_iter=1000)
