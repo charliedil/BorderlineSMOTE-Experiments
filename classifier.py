@@ -1,5 +1,4 @@
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import KFold
 from bean_dataset import Dataset
 from sklearn.metrics import f1_score, recall_score, precision_score
 import time
@@ -11,9 +10,7 @@ class Classifier:
     def __init__(self, features, classes, n_splits=5):
         self.features = features
         self.classes = classes
-        self.cv = StratifiedKFold(
-            n_splits=n_splits, shuffle=True, random_state=int(time.time())
-        )
+        self.cv = KFold(n_splits=n_splits, shuffle=True, random_state=int(time.time()))
 
     """ Get the F1 score of the estimator after cross validation """
 
