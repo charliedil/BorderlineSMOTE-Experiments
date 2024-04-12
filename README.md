@@ -21,5 +21,5 @@ python main.py <path/to/arff/file>
 ## Contributors
 
 + [Charlie Dil](https://github.com/charliedil) <br>
-+ [Nafeez-f](https://github.com/Nafeez-f) <br>
++ [Nafeez Fahad](https://github.com/Nafeez-f) <br>
 + [Roshan James](https://github.com/sephiroth7712)
