@@ -15,4 +15,4 @@ python main.py <path/to/arff/file>
 ## Contributors
 + [Roshan James](https://github.com/sephiroth7712) <br>
 + [Charlie Dil](https://github.com/charliedil) <br>
-+ [Nafeez-f](https://github.com/Nafeez-f)
++ [Nafeez Fahad](https://github.com/Nafeez-f)
