@@ -1,105 +1,42 @@
-"""
-Authors Charlie Dil, Nafeez Fahad, Roshan James Kurisummootil
-
-We're comparing Borderline Smote1 and 2 with regular SMOTE and no oversampling on the bean dataset from UC Irvine's repository.
-
-Please install requirements before running. You can use
-pip install -r requirements.txt
-
-Run with
-python main.py <path/to/arff/file>
-
-Python version: python3.10
-But 3.11 should also work.
-"""
-
+from sklearn.model_selection import KFold
 from bean_dataset import Dataset
-from classifier import Classifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
-from utils import get_dataset_from_path, compare_distr, print_scores
-import pandas as pd
+from sklearn.metrics import f1_score, recall_score, precision_score
+import time
 
-import sys
-
-"""Preprocessing the dataset. Create dataset object and oversample!"""
+""" CLASSIFIER CLASS """
 
 
-def preprocess(dataset_path):
-    bean_dataset = Dataset(dataset_path=dataset_path)
-    print("Before sampling:")
-    print(bean_dataset.get_distr())
-    features, classes = bean_dataset.oversample_smote()
-    bean_oversampled_dataset = Dataset(classes=classes, features=features)
-    print("After sampling:")
-    print(bean_oversampled_dataset.get_distr())
+class Classifier:
+    def __init__(self, features, classes, n_splits=5):
+        self.features = features
+        self.classes = classes
+        self.cv = KFold(n_splits=n_splits, shuffle=True, random_state=int(time.time()))
 
+    """ Get the F1 score of the estimator after cross validation """
 
-"""Just a main method, calls other methods, handles command line input"""
+    def cross_val_score(self, estimator, smote_strategy="borderline-1"):
+        f1_scores = []
+        recall_scores = []
+        precision_scores = []
+        X = self.features
+        y = self.classes
+        cv = self.cv
+        for train_idx, val_idx in cv.split(X, y):
+            X_train, y_train = X[train_idx], y[train_idx]
+            X_val, y_val = X[val_idx], y[val_idx]
 
+            dataset = Dataset(features=X_train, classes=y_train)
 
-def main():
-    if len(sys.argv) != 2:
-        print(
-            "Please provide one command line argument - path to the .arff file for the dry bean dataset"
-        )
-        exit(1)
-    dataset_path = sys.argv[1]
-    dataset = get_dataset_from_path(dataset_path=dataset_path)
+            if smote_strategy == "borderline-1" or smote_strategy == "borderline-2":
+                X_train, y_train = dataset.oversample_bsmote(kind=smote_strategy)
+            elif smote_strategy == "smote":
+                X_train, y_train = dataset.oversample_smote()
 
-    compare_distr(dataset=dataset)
+            estimator.fit(X_train, y_train)
+            y_pred = estimator.predict(X_val)
 
-    cl = Classifier(features=dataset.features, classes=dataset.classes, n_splits=5)
+            f1_scores.append(f1_score(y_val, y_pred, average="macro"))
+            recall_scores.append(recall_score(y_val, y_pred, average="macro"))
+            precision_scores.append(precision_score(y_val, y_pred, average="macro"))
 
-    print("Cross-validation scores:")
-    print_scores(
-        cl.cross_val_score(
-            estimator=LogisticRegression(solver="liblinear", max_iter=1000)
-        )
-    )
-    print_scores(
-        cl.cross_val_score(
-            estimator=LogisticRegression(solver="liblinear", max_iter=1000),
-            smote_strategy="smote",
-        ),
-        "Regular Smote",
-    )
-    print_scores(
-        cl.cross_val_score(
-            estimator=LogisticRegression(solver="liblinear", max_iter=1000),
-            smote_strategy="borderline-1",
-        ),
-        "Borderline Smote - 1",
-    )
-    print_scores(
-        cl.cross_val_score(
-            estimator=LogisticRegression(solver="liblinear", max_iter=1000),
-            smote_strategy="borderline-2",
-        ),
-        "Borderline Smote - 2",
-    )
-
-
-    print("\nCross-validation scores for Decision Tree:")
-    print_scores(cl.cross_val_score(estimator=DecisionTreeClassifier()))
-    print_scores(
-        cl.cross_val_score(estimator=DecisionTreeClassifier(), smote_strategy="smote"),
-        "Regular Smote",
-    )
-    print_scores(
-        cl.cross_val_score(
-            estimator=DecisionTreeClassifier(), smote_strategy="borderline-1"
-        ),
-        "Borderline Smote - 1",
-    )
-    print_scores(
-        cl.cross_val_score(
-            estimator=DecisionTreeClassifier(), smote_strategy="borderline-2"
-        ),
-        "Borderline Smote - 2",
-    )
-
-
-"""weird python stuff"""
-if __name__ == "__main__":
-    main()
+        return f1_scores, recall_scores, precision_scores

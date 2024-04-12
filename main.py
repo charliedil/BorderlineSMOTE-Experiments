@@ -16,6 +16,7 @@ But 3.11 should also work.
 from bean_dataset import Dataset
 from classifier import Classifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
 from utils import get_dataset_from_path, compare_distr, print_scores
 import pandas as pd
 
@@ -34,23 +35,11 @@ def preprocess(dataset_path):
     print(bean_oversampled_dataset.get_distr())
 
 
-"""Just a main method, calls other methods, handles command line input"""
+"""Compare the performance of the logistic regression classifier with various SMOTE variants"""
 
 
-def main():
-    if len(sys.argv) != 2:
-        print(
-            "Please provide one command line argument - path to the .arff file for the dry bean dataset"
-        )
-        exit(1)
-    dataset_path = sys.argv[1]
-    dataset = get_dataset_from_path(dataset_path=dataset_path)
-
-    compare_distr(dataset=dataset)
-
-    cl = Classifier(features=dataset.features, classes=dataset.classes, n_splits=5)
-
-    print("Cross-validation scores:")
+def logistic_regression(cl):
+    print("Cross-validation scores for Logistic Regression:")
     print_scores(
         cl.cross_val_score(
             estimator=LogisticRegression(solver="liblinear", max_iter=1000)
@@ -77,6 +66,49 @@ def main():
         ),
         "Borderline Smote - 2",
     )
+
+
+"""Compare the performance of the decision tree classifier with various SMOTE variants"""
+
+
+def decision_tree(cl):
+    print("Cross-validation scores for Decision Tree:")
+    print_scores(cl.cross_val_score(estimator=DecisionTreeClassifier()))
+    print_scores(
+        cl.cross_val_score(estimator=DecisionTreeClassifier(), smote_strategy="smote"),
+        "Regular Smote",
+    )
+    print_scores(
+        cl.cross_val_score(
+            estimator=DecisionTreeClassifier(), smote_strategy="borderline-1"
+        ),
+        "Borderline Smote - 1",
+    )
+    print_scores(
+        cl.cross_val_score(
+            estimator=DecisionTreeClassifier(), smote_strategy="borderline-2"
+        ),
+        "Borderline Smote - 2",
+    )
+
+
+"""Just a main method, calls other methods, handles command line input"""
+
+
+def main():
+    if len(sys.argv) != 2:
+        print(
+            "Please provide one command line argument - path to the .arff file for the dry bean dataset"
+        )
+        exit(1)
+    dataset_path = sys.argv[1]
+    dataset = get_dataset_from_path(dataset_path=dataset_path)
+
+    compare_distr(dataset=dataset)
+
+    cl = Classifier(features=dataset.features, classes=dataset.classes, n_splits=5)
+    logistic_regression(cl)
+    decision_tree(cl)
 
 
 """weird python stuff"""
