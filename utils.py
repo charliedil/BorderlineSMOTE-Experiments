@@ -30,12 +30,9 @@ def print_scores(scores, sampling_method=None):
         sampling_method = "Before Sampling"
 
     print(sampling_method)
-    print("F1:", scores[0])
-    print("Recall:", scores[1])
-    print("Precision:", scores[2])
     table = PrettyTable()
     table.field_names = ["Measure", "Mean", "Median", "Standard Deviation"]
-    measures = ["F1", "Recall", "Precision"]
+    measures = ["F1", "Recall", "Precision", "MCC"]
     for i in range(len(scores)):
         table.add_row(
             [measures[i], np.mean(scores[i]), np.median(scores[i]), np.std(scores[i])]

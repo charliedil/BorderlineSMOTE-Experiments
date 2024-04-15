@@ -17,6 +17,7 @@ from bean_dataset import Dataset
 from classifier import Classifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import ParameterGrid
 from utils import get_dataset_from_path, compare_distr, print_scores
 import pandas as pd
 
@@ -38,58 +39,82 @@ def preprocess(dataset_path):
 """Compare the performance of the logistic regression classifier with various SMOTE variants"""
 
 
-def logistic_regression(cl):
+def logistic_regression(cl, param_grid_regular, param_grid_borderline):
+
     print("Cross-validation scores for Logistic Regression:")
     print_scores(
         cl.cross_val_score(
             estimator=LogisticRegression(solver="liblinear", max_iter=1000)
         )
     )
-    print_scores(
-        cl.cross_val_score(
-            estimator=LogisticRegression(solver="liblinear", max_iter=1000),
-            smote_strategy="smote",
-        ),
-        "Regular Smote",
-    )
-    print_scores(
-        cl.cross_val_score(
-            estimator=LogisticRegression(solver="liblinear", max_iter=1000),
-            smote_strategy="borderline-1",
-        ),
-        "Borderline Smote - 1",
-    )
-    print_scores(
-        cl.cross_val_score(
-            estimator=LogisticRegression(solver="liblinear", max_iter=1000),
-            smote_strategy="borderline-2",
-        ),
-        "Borderline Smote - 2",
-    )
+
+    for i in range(0, len(param_grid_regular)):
+        print("K: ", param_grid_regular[i]["k"])
+        print_scores(
+            cl.cross_val_score(
+                estimator=LogisticRegression(solver="liblinear", max_iter=1000),
+                smote_strategy="smote",
+                k=param_grid_regular[i]["k"],
+            ),
+            "Regular Smote",
+        )
+
+    for i in range(0, len(param_grid_borderline)):
+        print(
+            "Kind: ",
+            param_grid_borderline[i]["kind"],
+            "K: ",
+            param_grid_borderline[i]["k"],
+            "M: ",
+            param_grid_borderline[i]["m"],
+        )
+        print_scores(
+            cl.cross_val_score(
+                estimator=LogisticRegression(solver="liblinear", max_iter=1000),
+                smote_strategy=param_grid_borderline[i]["kind"],
+                k=param_grid_borderline[i]["k"],
+                m=param_grid_borderline[i]["m"],
+            ),
+            param_grid_borderline[i]["kind"],
+        )
 
 
 """Compare the performance of the decision tree classifier with various SMOTE variants"""
 
 
-def decision_tree(cl):
+def decision_tree(cl, param_grid_regular, param_grid_borderline):
     print("Cross-validation scores for Decision Tree:")
     print_scores(cl.cross_val_score(estimator=DecisionTreeClassifier()))
-    print_scores(
-        cl.cross_val_score(estimator=DecisionTreeClassifier(), smote_strategy="smote"),
-        "Regular Smote",
-    )
-    print_scores(
-        cl.cross_val_score(
-            estimator=DecisionTreeClassifier(), smote_strategy="borderline-1"
-        ),
-        "Borderline Smote - 1",
-    )
-    print_scores(
-        cl.cross_val_score(
-            estimator=DecisionTreeClassifier(), smote_strategy="borderline-2"
-        ),
-        "Borderline Smote - 2",
-    )
+
+    for i in range(0, len(param_grid_regular)):
+        print("K: ", param_grid_regular[i]["k"])
+        print_scores(
+            cl.cross_val_score(
+                estimator=DecisionTreeClassifier(),
+                smote_strategy="smote",
+                k=param_grid_regular[i]["k"],
+            ),
+            "Regular Smote",
+        )
+
+    for i in range(0, len(param_grid_borderline)):
+        print(
+            "Kind: ",
+            param_grid_borderline[i]["kind"],
+            "K: ",
+            param_grid_borderline[i]["k"],
+            "M: ",
+            param_grid_borderline[i]["m"],
+        )
+        print_scores(
+            cl.cross_val_score(
+                estimator=DecisionTreeClassifier(),
+                smote_strategy=param_grid_borderline[i]["kind"],
+                k=param_grid_borderline[i]["k"],
+                m=param_grid_borderline[i]["m"],
+            ),
+            param_grid_borderline[i]["kind"],
+        )
 
 
 """Just a main method, calls other methods, handles command line input"""
@@ -107,8 +132,19 @@ def main():
     compare_distr(dataset=dataset)
 
     cl = Classifier(features=dataset.features, classes=dataset.classes, n_splits=5)
-    logistic_regression(cl)
-    decision_tree(cl)
+
+    param_grid_regular = {"k": [2, 5, 10, 15, 20]}
+    param_grid_regular = ParameterGrid(param_grid_regular)
+
+    param_grid_borderline = {
+        "kind": ["borderline-1", "borderline-2"],
+        "k": [2, 5, 10, 15, 20],
+        "m": [2, 5, 10, 15, 20],
+    }
+    param_grid_borderline = ParameterGrid(param_grid_borderline)
+
+    logistic_regression(cl, param_grid_regular, param_grid_borderline)
+    decision_tree(cl, param_grid_regular, param_grid_borderline)
 
 
 """weird python stuff"""

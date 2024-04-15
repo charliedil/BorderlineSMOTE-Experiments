@@ -33,10 +33,10 @@ class Dataset:
     def oversample_bsmote(
         self,
         kind,
-        sampling_strategy="not majority",
+        sampling_strategy="auto",
         random_state=42,
-        k_neighbors=5,
-        m_neighbors=10,
+        k_neighbors=7,
+        m_neighbors=15,
     ):  # may want to play with the parameters here
         features, classes = BorderlineSMOTE(
             kind=kind,
@@ -50,7 +50,7 @@ class Dataset:
     """regular smote code"""
 
     def oversample_smote(
-        self, sampling_strategy="not majority", random_state=42, k_neighbors=5
+        self, sampling_strategy="auto", random_state=42, k_neighbors=5
     ):  # also here, play with them
         features, classes = SMOTE(
             sampling_strategy=sampling_strategy,
