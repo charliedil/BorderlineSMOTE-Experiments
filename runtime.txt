@@ -1,0 +1,230 @@
+Before sampling:
+defaultdict(<function Dataset.get_distr.<locals>.<lambda> at 0x000001D2FAF392D0>, {'SEKER': 2027, 'BARBUNYA': 1322, 'BOMBAY': 522, 'CALI': 1630, 'HOROZ': 1928, 'SIRA': 2636, 'DERMASON': 3546})
+After sampling:
+defaultdict(<function Dataset.get_distr.<locals>.<lambda> at 0x000001D2FAF39360>, {'SEKER': 3546, 'BARBUNYA': 3546, 'BOMBAY': 3546, 'CALI': 3546, 'HOROZ': 3546, 'SIRA': 3546, 'DERMASON': 3546})
+Cross-validation runtimes for Logistic Regression:
+Unsampled
+3.0109384059906006
+K:  2
+2.119389772415161
+K:  5
+2.093780517578125
+K:  10
+2.1435699462890625
+K:  15
+2.162353515625
+K:  20
+2.223539113998413
+Kind:  borderline-1 K:  2 M:  2
+2.255262613296509
+Kind:  borderline-1 K:  2 M:  5
+2.509848117828369
+Kind:  borderline-1 K:  2 M:  10
+2.889775037765503
+Kind:  borderline-1 K:  2 M:  15
+3.0947535037994385
+Kind:  borderline-1 K:  2 M:  20
+3.2664694786071777
+Kind:  borderline-2 K:  2 M:  2
+2.223193645477295
+Kind:  borderline-2 K:  2 M:  5
+2.53552508354187
+Kind:  borderline-2 K:  2 M:  10
+2.91683292388916
+Kind:  borderline-2 K:  2 M:  15
+3.1191751956939697
+Kind:  borderline-2 K:  2 M:  20
+3.2285664081573486
+Kind:  borderline-1 K:  5 M:  2
+2.235435724258423
+Kind:  borderline-1 K:  5 M:  5
+2.534111976623535
+Kind:  borderline-1 K:  5 M:  10
+2.971106767654419
+Kind:  borderline-1 K:  5 M:  15
+3.0989437103271484
+Kind:  borderline-1 K:  5 M:  20
+3.288315773010254
+Kind:  borderline-2 K:  5 M:  2
+2.2524616718292236
+Kind:  borderline-2 K:  5 M:  5
+2.5239553451538086
+Kind:  borderline-2 K:  5 M:  10
+2.980703353881836
+Kind:  borderline-2 K:  5 M:  15
+3.189850091934204
+Kind:  borderline-2 K:  5 M:  20
+3.310051441192627
+Kind:  borderline-1 K:  10 M:  2
+2.2515296936035156
+Kind:  borderline-1 K:  10 M:  5
+2.5392801761627197
+Kind:  borderline-1 K:  10 M:  10
+3.0069353580474854
+Kind:  borderline-1 K:  10 M:  15
+3.2050349712371826
+Kind:  borderline-1 K:  10 M:  20
+3.2413525581359863
+Kind:  borderline-2 K:  10 M:  2
+2.355186700820923
+Kind:  borderline-2 K:  10 M:  5
+2.62847638130188
+Kind:  borderline-2 K:  10 M:  10
+3.7010183334350586
+Kind:  borderline-2 K:  10 M:  15
+3.524009943008423
+Kind:  borderline-2 K:  10 M:  20
+3.7263400554656982
+Kind:  borderline-1 K:  15 M:  2
+2.4221694469451904
+Kind:  borderline-1 K:  15 M:  5
+2.629545211791992
+Kind:  borderline-1 K:  15 M:  10
+3.0764145851135254
+Kind:  borderline-1 K:  15 M:  15
+3.262176275253296
+Kind:  borderline-1 K:  15 M:  20
+3.3576793670654297
+Kind:  borderline-2 K:  15 M:  2
+2.420304298400879
+Kind:  borderline-2 K:  15 M:  5
+2.6685400009155273
+Kind:  borderline-2 K:  15 M:  10
+3.2316339015960693
+Kind:  borderline-2 K:  15 M:  15
+3.398688316345215
+Kind:  borderline-2 K:  15 M:  20
+3.5781753063201904
+Kind:  borderline-1 K:  20 M:  2
+2.277289867401123
+Kind:  borderline-1 K:  20 M:  5
+2.530402183532715
+Kind:  borderline-1 K:  20 M:  10
+3.0165677070617676
+Kind:  borderline-1 K:  20 M:  15
+3.2333617210388184
+Kind:  borderline-1 K:  20 M:  20
+3.3374674320220947
+Kind:  borderline-2 K:  20 M:  2
+2.426785945892334
+Kind:  borderline-2 K:  20 M:  5
+2.6640350818634033
+Kind:  borderline-2 K:  20 M:  10
+3.249699354171753
+Kind:  borderline-2 K:  20 M:  15
+3.345644235610962
+Kind:  borderline-2 K:  20 M:  20
+3.626008987426758
+Cross-validation runtimes for Decision Tree:
+Unsampled
+3.675255537033081
+K:  2
+2.748128652572632
+K:  5
+2.7609055042266846
+K:  10
+2.8145833015441895
+K:  15
+2.866837978363037
+K:  20
+2.8872032165527344
+Kind:  borderline-1 K:  2 M:  2
+2.905081033706665
+Kind:  borderline-1 K:  2 M:  5
+3.1896541118621826
+Kind:  borderline-1 K:  2 M:  10
+3.6701912879943848
+Kind:  borderline-1 K:  2 M:  15
+3.8299827575683594
+Kind:  borderline-1 K:  2 M:  20
+3.9852373600006104
+Kind:  borderline-2 K:  2 M:  2
+2.9436421394348145
+Kind:  borderline-2 K:  2 M:  5
+3.175191640853882
+Kind:  borderline-2 K:  2 M:  10
+3.4872701168060303
+Kind:  borderline-2 K:  2 M:  15
+3.695396661758423
+Kind:  borderline-2 K:  2 M:  20
+3.8716437816619873
+Kind:  borderline-1 K:  5 M:  2
+2.907386541366577
+Kind:  borderline-1 K:  5 M:  5
+3.1761462688446045
+Kind:  borderline-1 K:  5 M:  10
+3.6591877937316895
+Kind:  borderline-1 K:  5 M:  15
+3.9420833587646484
+Kind:  borderline-1 K:  5 M:  20
+3.9686880111694336
+Kind:  borderline-2 K:  5 M:  2
+2.960264205932617
+Kind:  borderline-2 K:  5 M:  5
+3.2147748470306396
+Kind:  borderline-2 K:  5 M:  10
+3.568326234817505
+Kind:  borderline-2 K:  5 M:  15
+3.828338861465454
+Kind:  borderline-2 K:  5 M:  20
+3.9336979389190674
+Kind:  borderline-1 K:  10 M:  2
+2.9314966201782227
+Kind:  borderline-1 K:  10 M:  5
+3.126392364501953
+Kind:  borderline-1 K:  10 M:  10
+3.7272653579711914
+Kind:  borderline-1 K:  10 M:  15
+3.856337785720825
+Kind:  borderline-1 K:  10 M:  20
+4.0016703605651855
+Kind:  borderline-2 K:  10 M:  2
+3.068253755569458
+Kind:  borderline-2 K:  10 M:  5
+3.303278684616089
+Kind:  borderline-2 K:  10 M:  10
+3.759387731552124
+Kind:  borderline-2 K:  10 M:  15
+3.96815824508667
+Kind:  borderline-2 K:  10 M:  20
+4.140129089355469
+Kind:  borderline-1 K:  15 M:  2
+2.9631407260894775
+Kind:  borderline-1 K:  15 M:  5
+3.216665029525757
+Kind:  borderline-1 K:  15 M:  10
+3.614637851715088
+Kind:  borderline-1 K:  15 M:  15
+3.895742177963257
+Kind:  borderline-1 K:  15 M:  20
+3.9835152626037598
+Kind:  borderline-2 K:  15 M:  2
+3.187183380126953
+Kind:  borderline-2 K:  15 M:  5
+3.382200241088867
+Kind:  borderline-2 K:  15 M:  10
+3.8439829349517822
+Kind:  borderline-2 K:  15 M:  15
+4.0623204708099365
+Kind:  borderline-2 K:  15 M:  20
+4.231815814971924
+Kind:  borderline-1 K:  20 M:  2
+2.9373855590820312
+Kind:  borderline-1 K:  20 M:  5
+3.3298089504241943
+Kind:  borderline-1 K:  20 M:  10
+3.6765084266662598
+Kind:  borderline-1 K:  20 M:  15
+3.9228289127349854
+Kind:  borderline-1 K:  20 M:  20
+4.0464794635772705
+Kind:  borderline-2 K:  20 M:  2
+3.180159330368042
+Kind:  borderline-2 K:  20 M:  5
+3.3566765785217285
+Kind:  borderline-2 K:  20 M:  10
+3.940189838409424
+Kind:  borderline-2 K:  20 M:  15
+4.0665929317474365
+Kind:  borderline-2 K:  20 M:  20
+4.238365173339844

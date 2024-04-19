@@ -22,6 +22,7 @@ from utils import get_dataset_from_path, compare_distr, print_scores
 import pandas as pd
 
 import sys
+import time
 
 """Preprocessing the dataset. Create dataset object and oversample!"""
 
@@ -42,20 +43,26 @@ def preprocess(dataset_path):
 def logistic_regression(cl, param_grid_regular, param_grid_borderline):
 
     print("Cross-validation scores for Logistic Regression:")
-    print_scores(
-        cl.cross_val_score(
-            estimator=LogisticRegression(solver="liblinear", max_iter=1000)
-        )
+    start_time = time.time()
+    scores = cl.cross_val_score(
+        estimator=LogisticRegression(solver="liblinear", max_iter=1000)
     )
+    end_time = time.time()
+    print(end_time - start_time)
+    print_scores(scores)
 
     for i in range(0, len(param_grid_regular)):
         print("K: ", param_grid_regular[i]["k"])
+        start_time = time.time()
+        scores = cl.cross_val_score(
+            estimator=LogisticRegression(solver="liblinear", max_iter=1000),
+            smote_strategy="smote",
+            k=param_grid_regular[i]["k"],
+        )
+        end_time = time.time()
+        print(end_time - start_time)
         print_scores(
-            cl.cross_val_score(
-                estimator=LogisticRegression(solver="liblinear", max_iter=1000),
-                smote_strategy="smote",
-                k=param_grid_regular[i]["k"],
-            ),
+            scores,
             "Regular Smote",
         )
 
@@ -68,13 +75,17 @@ def logistic_regression(cl, param_grid_regular, param_grid_borderline):
             "M: ",
             param_grid_borderline[i]["m"],
         )
+        start_time = time.time()
+        scores = cl.cross_val_score(
+            estimator=LogisticRegression(solver="liblinear", max_iter=1000),
+            smote_strategy=param_grid_borderline[i]["kind"],
+            k=param_grid_borderline[i]["k"],
+            m=param_grid_borderline[i]["m"],
+        )
+        end_time = time.time()
+        print(end_time - start_time)
         print_scores(
-            cl.cross_val_score(
-                estimator=LogisticRegression(solver="liblinear", max_iter=1000),
-                smote_strategy=param_grid_borderline[i]["kind"],
-                k=param_grid_borderline[i]["k"],
-                m=param_grid_borderline[i]["m"],
-            ),
+            scores,
             param_grid_borderline[i]["kind"],
         )
 
@@ -84,16 +95,24 @@ def logistic_regression(cl, param_grid_regular, param_grid_borderline):
 
 def decision_tree(cl, param_grid_regular, param_grid_borderline):
     print("Cross-validation scores for Decision Tree:")
-    print_scores(cl.cross_val_score(estimator=DecisionTreeClassifier()))
+    start_time = time.time()
+    scores = cl.cross_val_score(estimator=DecisionTreeClassifier())
+    end_time = time.time()
+    print(end_time - start_time)
+    print_scores(scores)
 
     for i in range(0, len(param_grid_regular)):
         print("K: ", param_grid_regular[i]["k"])
+        start_time = time.time()
+        scores = cl.cross_val_score(
+            estimator=DecisionTreeClassifier(),
+            smote_strategy="smote",
+            k=param_grid_regular[i]["k"],
+        )
+        end_time = time.time()
+        print(end_time - start_time)
         print_scores(
-            cl.cross_val_score(
-                estimator=DecisionTreeClassifier(),
-                smote_strategy="smote",
-                k=param_grid_regular[i]["k"],
-            ),
+            scores,
             "Regular Smote",
         )
 
@@ -106,13 +125,17 @@ def decision_tree(cl, param_grid_regular, param_grid_borderline):
             "M: ",
             param_grid_borderline[i]["m"],
         )
+        start_time = time.time()
+        scores = cl.cross_val_score(
+            estimator=DecisionTreeClassifier(),
+            smote_strategy=param_grid_borderline[i]["kind"],
+            k=param_grid_borderline[i]["k"],
+            m=param_grid_borderline[i]["m"],
+        )
+        end_time = time.time()
+        print(end_time - start_time)
         print_scores(
-            cl.cross_val_score(
-                estimator=DecisionTreeClassifier(),
-                smote_strategy=param_grid_borderline[i]["kind"],
-                k=param_grid_borderline[i]["k"],
-                m=param_grid_borderline[i]["m"],
-            ),
+            scores,
             param_grid_borderline[i]["kind"],
         )
 
